@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gd.hr.mapper.RegionMapper">
+	
+	<!-- 리스트 보기 resultType > 초기 값 보는 타입 (메서드로 받으면 임포트 하는 것 처럼 부르면 됨)-->
+	<select id="selectRegionList" resultType="com.gd.hr.vo.Region">
+		SELECT 
+			region_id regionId,
+			region_name regionName
+		FROM regions
+		ORDER BY regionId ASC
+	</select>
+	
+	<select id="selectRegionOne" parameterType="int" resultType="com.gd.hr.vo.Region">
+		SELECT
+			region_id regiondId,
+			region_name regiondName
+		FROM regions
+		WHERE region_id = #{regionId}
+	</select>
+	
+	<!--  입력 parameterType > stmt resultset으로 값 넣을 때 부르는 타입 (임포트 하는 것 처럼 부르기)-->
+	<insert id="insertRegion" parameterType="com.gd.hr.vo.Region">
+		INSERT INTO regions(
+			region_id,
+			region_name
+		) values(
+			#{regionId}, <!-- stmt.set(넣는 자리에 채우는 방법) -->
+			#{regionName}			
+		)
+	</insert>
+	
+	<!--  삭제 parameterType값이 클래스가 아닌 int 로 하나만 받아올 경우 그 변수의 타입 넣기-->
+	<delete id="deleteRegion" parameterType="int">
+		DELETE FROM regions
+		WHERE region_id = #{regionId}	
+	</delete>
+	
+	<!--  수정 -->
+	<update id="updateRegion" parameterType="com.gd.hr.vo.Region">
+		UPDATE regions SET region_name = #{regionName}
+		WHERE region_id = #{regionId}
+	</update>
+	
+</mapper>
